@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import ReactDOM from 'react-dom';
 import ACTIONS from '../modules/action';
 import axios from "axios";
 import SearchResults from './SearchResults';
@@ -13,15 +12,13 @@ class ImageSearch extends React.PureComponent{
     {
         super(props);
         this.state={
-            searchImage:"",
-            showSearchDetails:false
+            searchImage:""
         };
     }
 
     searchImage(e)
     {
         e.preventDefault();
-        console.log("searchImage");
         axios.get(`https://api.unsplash.com/search/photos/?query=${this.state.searchImage}&client_id=df28ff85ddfd5c66e129d901cd2f025463d4911ed156aff171d16e2cf588c07d`)
       .then(res => {
         let images = res.data;
@@ -29,8 +26,6 @@ class ImageSearch extends React.PureComponent{
         this.setState({
             showSearchDetails:true
         });
-        //console.log("images"+JSON.stringify(images));
-        // this.setState({ persons });
       })
 
     }
@@ -46,9 +41,7 @@ class ImageSearch extends React.PureComponent{
     {
         return(
             <div>
-               <SearchResults imagevalues={this.props.images}>
-
-               </SearchResults>
+               <SearchResults imagevalues={this.props.images}/>
             </div>
         );
     }
@@ -73,7 +66,7 @@ render()
 
         <div>
             <form>
-            {!this.state.showSearchDetails && this.displaySearchButtonPage() }
+            { this.displaySearchButtonPage() }
             </form>
             {this.state.showSearchDetails && this.displaysearchPage()}
         </div>
